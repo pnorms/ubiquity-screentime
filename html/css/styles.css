@@ -1,0 +1,23 @@
+body {
+    background-color: #343a40; /* Dark background */
+}
+
+.square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    margin: 20px;
+    background-color: #007bff; /* Blue color */
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+}
+
+.square:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+

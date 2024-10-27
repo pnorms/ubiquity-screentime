@@ -1,0 +1,15 @@
+CREATE TABLE user_state (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    state ENUM('on', 'off') NOT NULL,
+    time INT NOT NULL,
+    last_updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE time_used (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    session_time_minutes INT NOT NULL,
+    started DATETIME,
+    stopped DATETIME
+);

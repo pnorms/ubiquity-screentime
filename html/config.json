@@ -1,0 +1,26 @@
+{
+    "unifi": {
+        "username": "REALLOCALUSERNAME",
+        "password": "REALLOCALPASSWORD",
+        "url": "https://REALIPOFUNIFI",
+        "site": "default",
+        "version": "4.0.20"
+    },
+    "database": {
+        "host": "REALIPOFDOCKERSERVER",
+        "username": "root",
+        "password": "REAL_MYSQL_ROOT_PASSWORD!",
+        "dbname": "screentime_db",
+        "port": "3306"
+    },
+    "app": {
+        "host": "REALIPOFDOCKERSERVER",
+        "port": "8000"
+    },
+    "timelimits": {
+        "per-day": {
+            "minutes": 120
+        }
+    },
+    "users": ["John", "Jim", "Joe"]
+}

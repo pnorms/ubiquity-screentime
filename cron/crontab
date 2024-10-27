@@ -1,0 +1,1 @@
+* * * * * curl -s http://REALIPOFDOCKERSERVER:8000/check_for_sessions_to_stop.php >> /var/log/cron.log 2>&1
