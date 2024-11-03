@@ -26,6 +26,14 @@ $sessionStopTime = null;
 $sessionTime = null;
 
 if ($user) {
+    // Get last session time
+    $stmt = $mysqli->prepare("SELECT session_time_minutes FROM time_used WHERE name = ? ORDER BY id DESC LIMIT 1");
+    $stmt->bind_param('s', $user);
+    $stmt->execute();
+    $stmt->bind_result($lastTimeUsed);
+    $stmt->fetch();
+    $stmt->close();
+
     // Get total time used in the last 24 hours
     $stmt = $mysqli->prepare("SELECT SUM(session_time_minutes) AS total_time FROM time_used WHERE name = ? AND started >= NOW() - INTERVAL 1 DAY");
     $stmt->bind_param('s', $user);
@@ -74,7 +82,7 @@ if ($user) {
     if (!$sessionInProgress && $sessionStopTime) {
         $elapsedWaitTime = (new DateTime())->diff(new DateTime($sessionStopTime));
         $elapsedWaitMinutes = $elapsedWaitTime->h * 60 + $elapsedWaitTime->i; // Total elapsed wait minutes
-        $remainingWaitTime = 20 - $elapsedWaitMinutes;
+        $remainingWaitTime = $lastTimeUsed - $elapsedWaitMinutes;
     }
 
     // If there is no time left or there is wait time, save the query to unify (since there are limits)
@@ -173,3 +181,4 @@ if ($user) {
     </div>
 </body>
 </html>
+
