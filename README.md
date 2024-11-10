@@ -23,29 +23,22 @@ There are a few things the need to be done with your Network Config for this to 
 
 
 Now, to do the actual install:
-On your Ubiquity Instance
-Add a new local user, give it admin access to Network. If you want to figure out the actual perms needed please share!
+- On your Ubiquity Instance
+  Add a new local user, give it admin access to Network. If you want to figure out the actual perms needed please share!
 
-In cron/crontab:
-Replace REALIPOFDOCKERSERVER with the IP of your docker server, or the IP of the 'web' container
-If you changed the port update it as well
+- In docker-compose.yml
+  Replace MYSQL_ROOT_PASSWORD: ThisIsJustATest1! with any password you like
 
-In docker-compose.yml
-Replace MYSQL_ROOT_PASSWORD: SOMESTRONGPASSWORD with any password you like
+- In html/config.json
+  - Under Unifi, add the username and password for the local Ubiquity account you created above
+    Update the url you your Ubiquity Gateway
+    Change the site if needed
 
-In html/config.json
-Under Unifi, add the username and password for the local Ubiquity account you created above
-Update the url you your Ubiquity Gateway
-Change the site if needed
+  - Under database update the password to whatever you choose above
 
-Under database update the IP to docker server ip
-Update password to whatever you choose above
+  - Change time limits if you want
 
-Under app, update the ip as well
-
-Change time limits if you want
-
-Under users enter names
+  - Under users enter the names to match device names given in Ubiquity
 
 
 Now you can run: docker-compose up -d

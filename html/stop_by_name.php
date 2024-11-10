@@ -3,7 +3,11 @@
 $config = json_decode(file_get_contents('config.json'), true);
 
 // Include UniFi API client
-require_once './UniFi-API-client/src/Client.php';
+if (!$config["testing"]) {
+    require_once './UniFi-API-client/src/Client.php';
+} else {
+    require_once './UniFi-API-client/src/Client.Testing.php';
+}
 
 // Connect to UniFi
 $unifi_connection = new UniFi_API\Client(

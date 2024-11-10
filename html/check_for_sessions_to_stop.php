@@ -61,11 +61,25 @@ while ($row = $result->fetch_assoc()) {
     }
 }
 
-// Return a message based on whether any action was taken
-if (!$action_taken) {
-    echo "No action needed at " . date('Y-m-d H:i:s') . "\n";
-}
-
 // Close the database connection
 $mysqli->close();
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <p>
+    <?php
+    // Return a message based on whether any action was taken
+    if (!$action_taken) {
+        echo "No action needed at " . date('Y-m-d H:i:s') . "\n";
+    } else {
+        echo "Stopping some things at " . date('Y-m-d H:i:s') . "\n";
+    }
+    ?>
+    </p>
+</body>
+</html>

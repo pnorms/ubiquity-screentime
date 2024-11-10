@@ -1,9 +1,13 @@
 <?php
-// Include UniFi API client
-require_once './UniFi-API-client/src/Client.php';
-
 // Load the JSON configuration
 $config = json_decode(file_get_contents('config.json'), true);
+
+// Include UniFi API client
+if (!$config["testing"]) {
+    require_once './UniFi-API-client/src/Client.php';
+} else {
+    require_once './UniFi-API-client/src/Client.Testing.php';
+}
 
 // Connect to the MySQL database using mysqli
 $mysqli = new mysqli($config['database']['host'], $config['database']['username'], $config['database']['password'], $config['database']['dbname'], $config['database']['port']);
@@ -147,6 +151,12 @@ if ($user) {
                 <?php endif; ?>
 
                 <?php if (!$sessionInProgress && $totalTimeUsed < $timeLimit): ?>
+                    <form action="grant_time.php" method="post" class="mt-4">
+                        <input type="hidden" name="mac_addresses" value="<?php echo htmlspecialchars(implode(',', array_column($matchedDevices, 'mac'))); ?>">
+                        <input type="hidden" name="time" value="3">
+                        <input type="hidden" name="user" value="<?php echo $user; ?>">
+                        <button type="submit" class="btn btn-success">Grant 3 Minutes</button>
+                    </form>
                     <form action="grant_time.php" method="post" class="mt-4">
                         <input type="hidden" name="mac_addresses" value="<?php echo htmlspecialchars(implode(',', array_column($matchedDevices, 'mac'))); ?>">
                         <input type="hidden" name="time" value="15">
