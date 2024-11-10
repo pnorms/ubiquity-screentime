@@ -8,15 +8,20 @@ services:
       - db
     volumes:
       - ./html:/var/www/html
+    networks:
+      - frontend
+      - backend
   db:
     image: mysql:8.1.0
     environment:
-      MYSQL_ROOT_PASSWORD: SOMESTRONGPASSWORD # Change this and take note, need to add it to config.json in /html
+      MYSQL_ROOT_PASSWORD: ThisIsJustATest1! # Change this and take note, need to add it to config.json in /html
       MYSQL_DATABASE: screentime_db
     ports:
       - '3306:3306'
     volumes:
       - ./mysql_data:/var/lib/mysql
+    networks:
+      - backend
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
@@ -25,9 +30,20 @@ services:
       - db
     environment:
       PMA_HOST: db
+    networks:
+      - frontend
+      - backend
   cron: # This is a light container to run the job that checks for devices to cut off
     build:
       context: .
       dockerfile: Dockerfile.cron
     depends_on:
-      - db
+      - web
+    networks:
+      - backend
+networks:
+  frontend:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
+  backend:
