@@ -1,9 +1,13 @@
 <?php
-// Include UniFi API client
-require_once './UniFi-API-client/src/Client.php';
-
 // Load the JSON configuration
 $config = json_decode(file_get_contents('config.json'), true);
+
+// Include UniFi API client
+if (!$config["testing"]) {
+    require_once './UniFi-API-client/src/Client.php';
+} else {
+    require_once './UniFi-API-client/src/Client.Testing.php';
+}
 
 // Connect to the MySQL database using mysqli
 $mysqli = new mysqli($config['database']['host'], $config['database']['username'], $config['database']['password'], $config['database']['dbname'], $config['database']['port']);
