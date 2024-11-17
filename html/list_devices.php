@@ -38,8 +38,8 @@ if ($user) {
     $stmt->fetch();
     $stmt->close();
 
-    // Get total time used in the last 24 hours
-    $stmt = $mysqli->prepare("SELECT SUM(session_time_minutes) AS total_time FROM time_used WHERE name = ? AND started >= NOW() - INTERVAL 1 DAY");
+    // Get total time used since midnight today
+    $stmt = $mysqli->prepare("SELECT SUM(session_time_minutes) AS total_time FROM time_used WHERE name = ? AND started >= TIMESTAMP(CURDATE())");
     $stmt->bind_param('s', $user);
     $stmt->execute();
     $stmt->bind_result($totalTimeUsed);
